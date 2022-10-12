@@ -10,7 +10,10 @@
         "build": "rimraf dist && rollup -c rollup.config.ts",
         "deploy": "pnpm run build && pnpm publish --no-git-check",
         "test": "jest",
-        "test:cov": "jest --coverage"
+        "test:cov": "jest --coverage",
+        "eslint": "eslint .",
+        "tsc": "tsc --noEmit",
+        "ci": "npm run eslint && npm run tsc && npm run build  && npm run test"
     },
     "license": "MIT",
     "description": "A fatcher middleware for transforming stream into json",
