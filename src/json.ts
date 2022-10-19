@@ -1,4 +1,4 @@
-import { canActivate, Middleware } from 'fatcher';
+import { canActivate, defineMiddleware, Middleware } from 'fatcher';
 
 /**
  * A middleware for transforming stream into json
@@ -8,31 +8,28 @@ import { canActivate, Middleware } from 'fatcher';
  * But if transform error. Will return a origin response.
  */
 export function json(): Middleware {
-    return {
-        name: 'fatcher-middleware-json',
-        async use(context, next) {
-            const result = await next();
+    return defineMiddleware(async (context, next) => {
+        const result = await next();
 
-            if (canActivate(result.data)) {
+        if (canActivate(result.data)) {
+            const clonedResponse = result.data.clone();
+
+            try {
                 /**
                  * Clone a response to try.
                  */
-                const clonedResponse = result.data.clone();
+                const data = await clonedResponse.json();
 
-                try {
-                    const data = await clonedResponse.json();
-
-                    return Object.assign(result, { data });
-                } catch {
-                    /**
-                     * If transform error.
-                     *
-                     * Return origin result.
-                     */
-                }
+                return Object.assign(result, { data });
+            } catch {
+                /**
+                 * If transform error.
+                 *
+                 * Return origin result.
+                 */
             }
+        }
 
-            return result;
-        },
-    };
+        return result;
+    }, 'fatcher-middleware-json');
 }
