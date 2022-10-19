@@ -15,6 +15,9 @@ export function json(): Middleware {
             const clonedResponse = result.data.clone();
 
             try {
+                /**
+                 * Clone a response to try.
+                 */
                 const data = await clonedResponse.json();
 
                 return Object.assign(result, { data });
