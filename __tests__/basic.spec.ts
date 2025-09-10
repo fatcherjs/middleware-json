@@ -1,67 +1,59 @@
 import { fatcher } from 'fatcher';
-import fetchMock from 'jest-fetch-mock';
+import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { json } from '../src';
 
-describe('Json', () => {
-    const BASE_URL = 'https://virual.com';
+const server = setupServer(
+  http.get('https://foo.bar/get', async () => {
+    return new HttpResponse();
+  }),
+  http.get('https://foo.bar/non-json', async () => {
+    return HttpResponse.text('non-json');
+  }),
+);
 
-    const jsonData = {
-        date: `${Date.now()}`,
-        id: 'json_test',
-    };
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
-    beforeEach(() => {
-        fetchMock.mockIf(new RegExp(`${BASE_URL}/.*`), async request => {
-            if (request.url === `${BASE_URL}/getJson`) {
-                return {
-                    body: JSON.stringify(jsonData),
-                };
-            }
-
-            if (request.url === `${BASE_URL}/getString`) {
-                return {
-                    body: 'getString',
-                };
-            }
-
-            return {
-                status: 404,
-            };
-        });
-
-        fetchMock.enableMocks();
+describe('fatcher-middleware-json', () => {
+  it('Provide a json read function', async () => {
+    const res = await fatcher('https://foo.bar/get', {
+      middlewares: [json],
     });
 
-    it('basic', async () => {
-        const result = await fatcher({
-            url: `${BASE_URL}/getJson`,
-            middlewares: [json()],
-        });
+    expect(typeof res.readStreamAsJson).toEqual('function');
+  });
 
-        expect(result.data).toStrictEqual(jsonData);
+  it('Return null with empty body', async () => {
+    const res = await fatcher('https://foo.bar/get', {
+      middlewares: [json],
     });
 
-    it('not used', async () => {
-        const result = await fatcher({
-            url: `${BASE_URL}/getJson`,
-            middlewares: [],
-        });
+    expect(await res.readStreamAsJson()).toBe(null);
+  });
 
-        /**
-         * Fetch mock will return an buffer, not a ReadableStream
-         */
-        expect(result.data instanceof Buffer).toBe(true);
+  it('Return null with used body', async () => {
+    const res = await fatcher('https://foo.bar/get', {
+      middlewares: [
+        json,
+        async (req, next) => {
+          const response = await next();
+          await response.text();
+          return response;
+        },
+      ],
     });
 
-    it('Does not convert data that is not JSON', async () => {
-        const result = await fatcher({
-            url: `${BASE_URL}/getString`,
-            middlewares: [json()],
-        });
+    expect(await res.readStreamAsJson()).toBe(null);
+  });
 
-        expect(result.data instanceof Buffer).toBe(true);
-        expect(result.data.toString()).toBe('getString');
+  it('Return null with non-json data', async () => {
+    const res = await fatcher('https://foo.bar/non-json', {
+      middlewares: [json],
     });
 
-    afterEach(() => fetchMock.disableMocks());
+    expect(await res.readStreamAsJson()).toBe(null);
+  });
 });

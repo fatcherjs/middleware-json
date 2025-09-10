@@ -1,3 +1,7 @@
+node_modules
 dist/
-node_modules/
-coverage/
+.env.local
+coverage
+*.log
+docs-dist/
+.DS_Store

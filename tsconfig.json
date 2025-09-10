@@ -1,14 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "strict": true,
-        "resolveJsonModule": true,
-        "moduleResolution": "node",
-        "noEmit": true,
-        "allowJs": true
-    },
-    "include": ["src/**/*", "__tests__/**/*"],
-    "exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "allowJs": true,
+    "baseUrl": "."
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
