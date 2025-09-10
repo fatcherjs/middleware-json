@@ -17,7 +17,8 @@
     "prepare": "husky install",
     "build": "vite build",
     "test": "vitest run",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "eslint": "eslint ."
   },
   "peerDependencies": {
     "fatcher": "^3.0.0-alpha-11"
