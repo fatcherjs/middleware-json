@@ -8,6 +8,9 @@ dependencies:
   '@fatcherjs/utils-shared':
     specifier: ^3.0.0-alpha-11
     version: 3.0.0-alpha-11
+  es-toolkit:
+    specifier: ^1.43.0
+    version: 1.43.0
 
 devDependencies:
   '@fansy/eslint-config':
@@ -35,8 +38,8 @@ devDependencies:
     specifier: ^5.2.1
     version: 5.2.1(eslint@8.57.1)(prettier@3.3.3)
   fatcher:
-    specifier: 3.0.0-alpha-11
-    version: 3.0.0-alpha-11
+    specifier: ^3.0.0
+    version: 3.0.0
   husky:
     specifier: ^9.1.7
     version: 9.1.7
@@ -1656,6 +1659,10 @@ packages:
     resolution: {integrity: sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==}
     dev: true
 
+  /es-toolkit@1.43.0:
+    resolution: {integrity: sha512-SKCT8AsWvYzBBuUqMk4NPwFlSdqLpJwmy6AP322ERn8W2YLIB6JBXnwMI2Qsh2gfphT3q7EKAxKb23cvFHFwKA==}
+    dev: false
+
   /esbuild@0.25.9:
     resolution: {integrity: sha512-CRbODhYyQx3qp7ZEwzxOk4JBqmD/seJrzPa/cGjY1VtIn5E09Oi9/dB4JwctnfZ8Q8iT7rioVv5k/FNT/uf54g==}
     engines: {node: '>=18'}
@@ -1907,8 +1914,8 @@ packages:
       reusify: 1.1.0
     dev: true
 
-  /fatcher@3.0.0-alpha-11:
-    resolution: {integrity: sha512-/rq/CPdDmc9KAeMbBaNvczsVufUtQBo8N/UBwhgsrI5CtmDEfdK0SFU/ONp+509+0gVqct2ByXQ5uEYunlLRfg==}
+  /fatcher@3.0.0:
+    resolution: {integrity: sha512-sk+Q2t5POMmZOI06gi38QIgfgI7PBgwK1vOAWrw+5D57NrBp6YiUR12kyibBJEaTrT1C2VthiG5D9fcBbxgqRQ==}
     engines: {node: '>=18.0.0'}
     dev: true
 
