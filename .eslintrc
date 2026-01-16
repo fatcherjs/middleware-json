@@ -7,6 +7,8 @@
     "no-bitwise": "off",
     "@typescript-eslint/no-empty-object-type": "warn",
     "@typescript-eslint/no-explicit-any": "warn",
-    "max-nested-callbacks":"off"
+    "max-nested-callbacks":"off",
+    "lines-between-class-members": "off",
+    "no-useless-constructor": "off"
   }
 }
