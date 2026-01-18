@@ -69,7 +69,7 @@ console.log(response.snapshot); // Progressive Json
 
 ### React 19
 
-[Code Sandbox](https://codesandbox.io/p/sandbox/5lpgwf)
+[Code Sandbox](https://codesandbox.io/p/sandbox/fatcher-progressive-json-kdn9w3)
 
 ```jsx
 import { useState } from 'react';
